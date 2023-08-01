@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>App Name</title>
+    <title>Mortgage Calc</title>
 
     <!-- Bootsstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -23,43 +23,105 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class=" container-fluid">
-            <a class="navbar-brand" href="index.html">
-                &nbsp;<img src="/img/ssmark.svg" height="30" alt="developer logo" />
-                &nbsp;App Name</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/app.html">The App</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/code.html">The Code</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/sschwartz7/Portfolio">The Repo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://schwartzwork.vercel.app/">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://schwartzwork.vercel.app/">Blog</a>
-                    </li>
-                </ul>
-            </div>
+                <a class="navbar-brand" href="index.html">
+                    &nbsp;<img src="/img/ssmark.svg" height="30" alt="developer logo" />
+                    &nbsp;Mortgage Calc</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/app.html">The App</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/code.html">The Code</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/sschwartz7/MortgageCalc">The Repo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://schwartzwork.vercel.app/">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://schwartzwork.vercel.app/">Blog</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
     <main class="container py-3">
-        <h1>APP UI GOES HERE</h1>
-        <input class="form-control" id="message" placeholder="enter a message" type="text" />
-        <button class="btn btn-primary my-3" id="btnSubmit" type="button">Display Message</button>
+        <div class="row row-cols-1">
+            <div class="col-lg-4 p-3">
+                <form class="col" id="calcNum">
+                    <div class="col">
+                        <label for="loanAmount" class="form-label">Loan Amount</label>
+                        <input name="loanAmount" type="number" id="loanAmount" class="form-control"
+                            placeholder="Loan Amount" aria-label="Loan Amount" required />
+                    </div>
+                    <div class="col pt-2">
+                        <label for="Term" class="form-label">Term (Months)</label>
+                        <input name="Term" type="number" id="Term" class="form-control" placeholder="Term (Months)"
+                            aria-label="Term" required />
+                    </div>
+                    <div class="col pt-2">
+                        <label for="Rate" class="form-label">Interest Rate</label>
+                        <input name="Rate" type="number" id="Rate" class="form-control" placeholder="Interest Rate"
+                            aria-label="Rate" required />
+                    </div>
+                    <button type="button" class="btn btn-primary my-2" onclick="getNum()">Calculate!</button>
+                </form>
+                <div class="col text-center">
+                    <H2>Your Monthly Payments:</H2>
+                    <h2 id="monthlyPay"></h2>
+                </div>
+                <div class="col">
+                    <table class="table table border shadow">
+                        <tbody>
+                            <tr>
+                                <td>Total Principle</td>
+                                <td id="principle"></td>
+                            </tr>
+                            <tr>
+                                <td>Total Interest</td>
+                                <td id="interest"></td>
+                            </tr>
+                            <tr>
+                                <td>Total Cost</td>
+                                <td id="cost"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row row-cols-1 col-lg-8 text-center p-3">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-striped border shadow">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Payment</th>
+                                    <th>Principle</th>
+                                    <th>Interest</th>
+                                    <th>Total Interest</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentTable">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
     <footer class="footer container-fluid py-3">
         <div class="container-fluid">
@@ -82,6 +144,17 @@
             </div>
         </div>
     </footer>
+
+    <template id="table-row-template">
+        <tr>
+            <td data-id="month"></td>
+            <td data-id="payment"></td>
+            <td data-id="principle"></td>
+            <td data-id="interest"></td>
+            <td data-id="tInterest"></td>
+            <td data-id="balance"></td>
+        </tr>
+    </template>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
@@ -91,9 +164,6 @@
     <!-- Custom JS-->
     <script src="js/site.js"></script>
 
-    <script>
-        document.getElementById('btnSubmit').addEventListener('click', displayMessage);
-    </script>
 </body>
 
 </html>

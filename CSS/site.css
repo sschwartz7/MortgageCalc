@@ -1,16 +1,16 @@
 :root {
-    --ss-theme-core: #613f8d;
-    --ss-theme-100: hsl(266, 50%, 91%);
-    --ss-theme-150: hsl(266, 50%, 86%);
-    --ss-theme-200: hsl(266, 50%, 81%);
-    --ss-theme-300: hsl(266, 50%, 71%);
-    --ss-theme-400: hsl(266, 50%, 61%);
-    --ss-theme-500: hsl(266, 50%, 51%);
-    --ss-theme-600: hsl(266, 50%, 41%);
-    --ss-theme-700: hsl(266, 50%, 31%);
-    --ss-theme-800: hsl(266, 50%, 21%);
-    --ss-theme-850: hsl(266, 50%, 16%);
-    --ss-theme-900: hsl(266, 50%, 11%);
+    --ss-theme-core: hsl(348, 79%, 81%);
+    --ss-theme-100: hsl(348, 50%, 91%);
+    --ss-theme-150: hsl(348, 50%, 86%);
+    --ss-theme-200: hsl(348, 50%, 81%);
+    --ss-theme-300: hsl(348, 50%, 71%);
+    --ss-theme-400: hsl(348, 50%, 61%);
+    --ss-theme-500: hsl(348, 50%, 51%);
+    --ss-theme-600: hsl(348, 50%, 41%);
+    --ss-theme-700: hsl(348, 50%, 31%);
+    --ss-theme-800: hsl(348, 50%, 21%);
+    --ss-theme-850: hsl(348, 50%, 16%);
+    --ss-theme-900: hsl(348, 50%, 11%);
     --ss-theme-accent: rgb(255, 0, 85);
     --ss-theme-accent2: #406C8D;
     --ss-dark-color: #212121;

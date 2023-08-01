@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>App Name</title>
+    <title>Mortgage Calc</title>
 
     <!-- Bootsstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,11 +24,11 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark" >
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="index.html">
                     &nbsp;<img src="/img/ssmark.svg" height="30" alt="developer logo" />
-                    &nbsp;App Name</a>
+                    &nbsp;Mortgage Calc</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@
                             <a class="nav-link active" aria-current="page" href="/code.html">The Code</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://github.com/sschwartz7/Portfolio">The Repo</a>
+                            <a class="nav-link" href="https://github.com/sschwartz7/MortgageCalc">The Repo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://schwartzwork.netlify.app/">About</a>
@@ -65,25 +65,102 @@
             <div class="col-lg-8">
                 <pre class="line-numbers">
                     <code class="language-js">
-                        function displayMessage(){
-                            let inputBox= document.getElementById('message');
-                            let message= inputBox.value;
+                        function getNum() {
+                            let loan = parseFloat(document.getElementById('loanAmount').value);
+                            let term = parseInt(document.getElementById('Term').value);
+                            let rate = parseFloat(document.getElementById('Rate').value);
+                            let payments = CreatePaymentObj(loan, term, rate);
+                            displayPTable(payments);
+                            displayTotals(loan, payments);
+                        }
+                        function displayPTable(payments) {
                         
-                            Swal.fire(
-                                {
-                                    backdrop: false,
-                                    title: 'App Name',
-                                    text: message
+                            const paymentTable = document.getElementById('paymentTable');
+                          
+                            const paymentTemplate = document.getElementById('table-row-template');
+                            
+                            paymentTable.innerHTML = '';
+                        
+                            for (let index = 0; index < payments.length; index++) {
+                              
+                                let month = payments[index];
+                               
+                                let tableRow = paymentTemplate.content.cloneNode(true);
+                     
+                                tableRow.querySelector('[data-id="month"]').innerText = month.month;
+                                tableRow.querySelector('[data-id="payment"]').innerText = month.payment.toLocaleString("en-US", {style:"currency", currency:"USD"});
+                                tableRow.querySelector('[data-id="principle"]').innerText = month.principle.toLocaleString("en-US", {style:"currency", currency:"USD"});
+                                tableRow.querySelector('[data-id="interest"]').innerText = month.interest.toLocaleString("en-US", {style:"currency", currency:"USD"});
+                                tableRow.querySelector('[data-id="tInterest"]').innerText = month.tInterest.toLocaleString("en-US", {style:"currency", currency:"USD"});
+                                tableRow.querySelector('[data-id="balance"]').innerText = month.balance.toLocaleString("en-US", {style:"currency", currency:"USD"});
+            
+                                paymentTable.appendChild(tableRow);
+                            }
+                        }
+                        
+                        function displayTotals(principle, payments) {
+                        
+                            document.getElementById("monthlyPay").innerHTML = payments[0].payment.toLocaleString("en-US", {style:"currency", currency:"USD"});
+                            document.getElementById('principle').innerHTML = principle.toLocaleString("en-US", {style:"currency", currency:"USD"});
+                            document.getElementById('interest').innerHTML = payments[payments.length-1].tInterest.toLocaleString("en-US", {style:"currency", currency:"USD"});
+                            document.getElementById('cost').innerText = (principle + payments[payments.length-1].tInterest).toLocaleString("en-US", {style:"currency", currency:"USD"});
+                        
+                        }
+                        
+                        function CreatePaymentObj(loan, term, rate) {
+                            payments= [];
+                            let balance = loan;
+                            let tInterest = 0;
+                            tMonthlyPayment = (loan * (rate / 1200)) / (1 - (1 + (rate / 1200)) ** -term);
+
+                            for (let i = 1; i <= term; i++) {
+                                let interest = (balance * (rate / 1200));
+                                tInterest = tInterest + interest;
+                                let principle = tMonthlyPayment - interest;
+                                balance = balance+interest-tMonthlyPayment;
+                                if (balance <= 0){
+                                    balance = 0;
                                 }
-                              );
+                                let newPayment = {
+                                    month: i,
+                                    payment: tMonthlyPayment,
+                                    principle: principle,
+                                    interest: interest,
+                                    tInterest: tInterest,
+                                    balance: balance,
+                                };
+                                payments.push(newPayment);
+                            }
+                            return payments;
                         }
                     </code>
                 </pre>
             </div>
             <div class="col-lg-4">
-                <p>There is one function</p>
-                <h5>displayMessage</h5>
-                <p>Shows a SweetAlert with the value of the <code>message</code> varialebe</p>
+                <p>There are multiple funtions in this program in order to take 3 user inputs (loan amount, term, and
+                    interest rate) and return a table with a detailed breakdown of monthly payments.</p>
+                <h5>getNum</h5>
+                <p>This function retrieves the values from the respective input
+                    fields, converts them to the appropriate data types, and then calls two other functions:
+                    <code>CreatePaymentObj(loan, term, rate)</code> and <code>displayPTable(payments)</code>.
+                <h5>displayPTable</h5>
+                <p>This function takes an array of payment objects as input and displays them in an HTML table on the
+                    web page. It finds the table element with the ID paymentTable, clears its content, and then iterates
+                    through the payments array to create and insert table rows for each payment object. The data from
+                    each payment object (e.g.,<code> month, payment amount, principle, interest, total interest, and balance</code>)
+                    is formatted and inserted into the corresponding cells of the table row.</p>
+                <h5>displayTotals</h5>
+                <p> This function takes the initial loan amount (<code>principle</code>) and the array of payment objects (<code>payments</code>)
+                    as input. It calculates and displays the monthly payment amount, the total interest paid, and the
+                    total cost (<code>loan amount</code> + <code>total interest</code>) on the web page.</p>
+                <h5>CreatePaymentObj</h5>
+                <p>This function is responsible for calculating the loan payment details for each month and returns an
+                    array of payment objects. It takes the loan amount (<code>loan</code>), the loan term in months (<code>term</code>), and the
+                    interest rate per annum (<code>rate</code>) as input. It then iterates through each month, calculating the
+                    interest and principle payments for that month based on the loan amount, term, and interest rate.
+                    The function keeps track of the total interest paid (<code>tInterest</code>) and the remaining balance after each
+                    payment. The payment details for each month are stored in an object and pushed into the payments
+                    array, which is then returned at the end.</p>
             </div>
         </div>
     </main>
