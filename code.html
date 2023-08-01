@@ -69,6 +69,9 @@
                             let loan = parseFloat(document.getElementById('loanAmount').value);
                             let term = parseInt(document.getElementById('Term').value);
                             let rate = parseFloat(document.getElementById('Rate').value);
+                            if (isNaN(loan) == true || isNaN(term) == true || isNaN(rate) == true){
+                                Swal.fire('All inputs must be numbers')
+                            }
                             let payments = CreatePaymentObj(loan, term, rate);
                             displayPTable(payments);
                             displayTotals(loan, payments);
@@ -143,6 +146,7 @@
                 <p>This function retrieves the values from the respective input
                     fields, converts them to the appropriate data types, and then calls two other functions:
                     <code>CreatePaymentObj(loan, term, rate)</code> and <code>displayPTable(payments)</code>.
+                    If any of the inputs are not numbers, then a sweetalert is displayed</p>
                 <h5>displayPTable</h5>
                 <p>This function takes an array of payment objects as input and displays them in an HTML table on the
                     web page. It finds the table element with the ID paymentTable, clears its content, and then iterates
